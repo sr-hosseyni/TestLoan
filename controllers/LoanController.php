@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\User;
 use Yii;
 use app\models\Loan;
 use app\models\LoanSearch;
@@ -21,7 +22,7 @@ class LoanController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -62,9 +63,13 @@ class LoanController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($user_id)
     {
         $model = new Loan();
+        $user = User::findOne($user_id);
+        if (!$user) {
+            throw new NotFoundHttpException('User not found');
+        }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -72,6 +77,7 @@ class LoanController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'user' => $user
         ]);
     }
 

@@ -39,6 +39,8 @@ class Loan extends \yii\db\ActiveRecord
             [['amount', 'interest'], 'number'],
             [['start_date', 'end_date'], 'safe'],
             [['status'], 'boolean'],
+            [['user_id'], 'exist', 'targetClass' => User::class, 'targetAttribute' => 'id'],
+            [['start_date', 'end_date'], 'match', 'pattern' => '#^\d{4}[-/ ]\d{2}[-/ ]\d{2}$#'],
         ];
     }
 
@@ -58,5 +60,13 @@ class Loan extends \yii\db\ActiveRecord
             'campaign' => 'Campaign',
             'status' => 'Status',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUser()
+    {
+        return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 }

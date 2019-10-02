@@ -34,7 +34,8 @@ class User extends \yii\db\ActiveRecord
     {
         return [
             [['first_name', 'last_name', 'email', 'personal_code', 'phone'], 'required'],
-            [['first_name', 'last_name', 'email', 'lang'], 'string'],
+            [['first_name', 'last_name', 'lang'], 'string'],
+            [['email'], 'email'],
             [['personal_code', 'phone'], 'default', 'value' => null],
             [['personal_code', 'phone'], 'integer'],
             [['active', 'dead'], 'boolean'],
@@ -57,5 +58,13 @@ class User extends \yii\db\ActiveRecord
             'dead' => 'Dead',
             'lang' => 'Lang',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getLoans()
+    {
+        return $this->hasMany(Loan::class, ['user_id' => 'id'])->inverseOf('user');
     }
 }

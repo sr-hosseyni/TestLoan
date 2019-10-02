@@ -6,13 +6,14 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model app\models\Loan */
 /* @var $form yii\widgets\ActiveForm */
+/* @var $user app\models\User */
 ?>
 
 <div class="loan-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'user_id')->textInput() ?>
+    <?= $form->field($model, 'user_id')->hiddenInput(['value' => $user->id])->label(false); ?>
 
     <?= $form->field($model, 'amount')->textInput() ?>
 

@@ -17,7 +17,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'user_id') ?>
+    <?= $form->field($model, 'user_id')->dropDownList(
+        \yii\helpers\ArrayHelper::map(\app\models\User::find()->all(), 'id', 'first_name'),
+        ['prompt' => '[All Users]']
+    ) ?>
+
+
+
 
     <?= $form->field($model, 'amount') ?>
 

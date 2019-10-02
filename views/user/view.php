@@ -1,5 +1,7 @@
 <?php
 
+use app\models\LoanSearch;
+use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -30,15 +32,40 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'first_name:ntext',
-            'last_name:ntext',
-            'email:ntext',
+            'first_name',
+            'last_name',
+            'email:email',
             'personal_code',
             'phone',
             'active:boolean',
             'dead:boolean',
-            'lang:ntext',
+            'lang',
         ],
     ]) ?>
+
+</div>
+
+
+<div class="user-loans">
+
+    <?php
+    $searchModel = new LoanSearch();
+    $dataProvider = $searchModel->search(['LoanSearch' => ['user_id' => $model->id]]);
+
+    echo GridView::widget([
+        'dataProvider' => $dataProvider,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+            'id',
+            'amount',
+            'interest',
+            'duration',
+            'start_date',
+            'end_date',
+            'campaign',
+            'status:boolean',
+        ],
+    ]);
+    ?>
 
 </div>
