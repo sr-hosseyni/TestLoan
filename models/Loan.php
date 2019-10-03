@@ -2,13 +2,15 @@
 
 namespace app\models;
 
-use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "loan".
  *
  * @property int $id
  * @property int $user_id
+ * @property User $user
  * @property string $amount
  * @property string $interest
  * @property int $duration
@@ -17,7 +19,7 @@ use Yii;
  * @property int $campaign
  * @property bool $status
  */
-class Loan extends \yii\db\ActiveRecord
+class Loan extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -63,7 +65,7 @@ class Loan extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getUser()
     {

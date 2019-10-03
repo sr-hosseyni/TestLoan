@@ -41,6 +41,8 @@ class UserSearch extends User
      */
     public function search($params)
     {
+        $this->active = true;
+
         $query = User::find();
 
         // add conditions that should always apply here

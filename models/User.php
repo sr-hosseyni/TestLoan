@@ -2,7 +2,8 @@
 
 namespace app\models;
 
-use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "user".
@@ -16,8 +17,9 @@ use Yii;
  * @property bool $active
  * @property bool $dead
  * @property string $lang
+ * @property Loan[] $loans
  */
-class User extends \yii\db\ActiveRecord
+class User extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -61,10 +63,23 @@ class User extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getLoans()
     {
         return $this->hasMany(Loan::class, ['user_id' => 'id'])->inverseOf('user');
+    }
+
+    /**
+     * Soft Delete
+     * @return false|int|void
+     */
+    public function delete()
+    {
+        /**
+         * Loans are still presenting in loans list !!!
+         */
+        $this->active = false;
+        $this->save();
     }
 }

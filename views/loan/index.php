@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\LoanSearch */
@@ -14,8 +15,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?php echo $this->render('_search', ['model' => $searchModel]); ?>
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -25,14 +24,33 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'user_id',
             'amount',
-            'interest',
+//            'interest',
             'duration',
-            //'start_date',
+            'start_date',
             //'end_date',
             //'campaign',
             //'status:boolean',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{view} {update} {delete}',
+                'buttons' => [
+                    'view' => function ($action) {
+                        return Html::a('View', $action, ['title' => 'view', 'class' => 'btn btn-xs btn-primary']);
+                    },
+                    'update' => function ($action) {
+                        return Html::a('Edit', $action, ['title' => 'update', 'class' => 'btn btn-xs btn-default']);
+                    },
+                    'delete' => function ($url) {
+                        return Html::a('Delete', $url, [
+                            'title' => 'delete',
+                            'class' => 'btn btn-xs btn-danger',
+                            'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this user?'),
+                            'data-method' => 'post',
+                        ]);
+                    },
+                ]
+            ],
         ],
     ]); ?>
 
