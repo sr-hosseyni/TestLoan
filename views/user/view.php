@@ -4,6 +4,9 @@ use app\models\LoanSearch;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use app\helpers\PersonalCodeParser;
+use DateTime;
+use yii\web\YiiAsset;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\User */
@@ -11,7 +14,7 @@ use yii\widgets\DetailView;
 $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-\yii\web\YiiAsset::register($this);
+YiiAsset::register($this);
 ?>
 <div class="user-view">
 
@@ -40,6 +43,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'active:boolean',
             'dead:boolean',
             'lang',
+            [
+                'label' => 'Age',
+                'value' => function ($model) {
+                    return date_diff(PersonalCodeParser::parseAge($model->personal_code), new DateTime())->format('%y');
+                }
+            ]
         ],
     ]) ?>
 
