@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css?family=Ubuntu:300,400,700&display=swap');
+
+* {
+  font-family: 'Ubuntu', sans-serif;
+}
+
+//@import "_bootstrap-variables";
+@import "_variables";
+
+@mixin btn-gradiant($color1, $color2, $hover: 0) {
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, $color1), color-stop(1, $color2));
+  background: -moz-linear-gradient(top, $color1 0%, $color2 100%);
+  background: -webkit-linear-gradient(top, $color1 0%, $color2 100%);
+  background: -o-linear-gradient(top, $color1 0%, $color2 100%);
+  background: -ms-linear-gradient(top, $color1 0%, $color2 100%);
+  background: linear-gradient(to bottom, $color1 0%, $color2 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$color1', endColorstr='$color2 ', GradientType=0);
+
+  @if $hover != 0 {
+    &:hover {
+      @include btn-gradiant($color2, $color1);
+      border: solid 2px $white;
+      //box-shadow: 0 1px 3px $gray-500;
+    }
+
+    &:active {
+      border: solid 2px $white;
+    }
+  }
+}
+
+.btn {
+  -webkit-border-radius: $border-radius-lg;
+  -moz-border-radius: $border-radius-lg;
+  border-radius: $border-radius-lg;
+  border: solid $btn-border-width $border-color;
+  box-shadow: $btn-box-shadow !important;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:active {
+    position: relative;
+    top: 1px;
+  }
+}
+
+.btn-danger {
+  @include btn-gradiant($red, $crimson, 1);
+}
+
+.btn-danger {
+  @include btn-gradiant($red, $crimson, 1);
+}
+
+.btn-primary {
+  @include btn-gradiant($yellow, $orange, 1);
+}
+
+.btn-default {
+  color: $white;
+  @include btn-gradiant($gray-600, $gray-dark, 1);
+
+  &:hover {
+    color: $white;
+  }
+}
+
+.btn-success {
+  @include btn-gradiant($purple, $indigo, 1);
+}

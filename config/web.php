@@ -51,6 +51,9 @@ $config = [
             ],
         ],
         */
+        'assetManager' => [
+            'converter' => 'lucidtaz\yii2scssphp\ScssAssetConverter',
+        ]
     ],
     'params' => $params,
 ];

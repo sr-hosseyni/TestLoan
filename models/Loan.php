@@ -42,7 +42,7 @@ class Loan extends ActiveRecord
             [['start_date', 'end_date'], 'safe'],
             [['status'], 'boolean'],
             [['user_id'], 'exist', 'targetClass' => User::class, 'targetAttribute' => 'id'],
-            [['start_date', 'end_date'], 'match', 'pattern' => '#^\d{4}[-/ ]\d{2}[-/ ]\d{2}\s+(\d{2}:\d{2}:\d{2})?$#'],
+            [['start_date', 'end_date'], 'match', 'pattern' => '#^\d{4}[-/ ]\d{2}[-/ ]\d{2}(\s+\d{2}:\d{2}:\d{2})?$#'],
         ];
     }
 
