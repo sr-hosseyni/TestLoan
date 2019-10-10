@@ -4,6 +4,7 @@ namespace app\models;
 
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\web\IdentityInterface;
 
 /**
  * This is the model class for table "user".
@@ -40,6 +41,7 @@ class User extends ActiveRecord
             [['email'], 'email'],
             [['personal_code', 'phone'], 'default', 'value' => null],
             [['personal_code', 'phone'], 'integer'],
+            [['personal_code'], 'validatePersonalCode'],
             [['active', 'dead'], 'boolean'],
         ];
     }
@@ -71,15 +73,29 @@ class User extends ActiveRecord
     }
 
     /**
-     * Soft Delete
      * @return false|int|void
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
+     * @todo Soft Delete would be better
      */
     public function delete()
     {
-        /**
-         * Loans are still presenting in loans list !!!
-         */
-        $this->active = false;
-        $this->save();
+        foreach ($this->loans as $loan) {
+            $loan->delete();
+        }
+
+        return parent::delete();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function validatePersonalCode($attribute, $params)
+    {
+        try {
+            \Yii::$app->personalCodeParser->parseBirthDate($this->$attribute);
+        } catch (\Throwable $throwable) {
+            $this->addError($attribute, $throwable->getMessage());
+        }
     }
 }

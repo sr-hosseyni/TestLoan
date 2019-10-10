@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\exceptions\UnderAgeException;
+use app\helpers\PersonalCodeParser;
 use app\models\User;
 use Yii;
 use app\models\Loan;
@@ -65,12 +67,16 @@ class LoanController extends Controller
      */
     public function actionCreate($user_id)
     {
-        $model = new Loan();
         $user = User::findOne($user_id);
         if (!$user) {
             throw new NotFoundHttpException('User not found');
         }
 
+        if (Yii::$app->personalCodeParser->parseAge($user->personal_code) < 18) {
+            throw new UnderAgeException();
+        }
+
+        $model = new Loan();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }

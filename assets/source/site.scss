@@ -1,72 +1,117 @@
-@import url('https://fonts.googleapis.com/css?family=Ubuntu:300,400,700&display=swap');
+// This file was inside web/css/ directory in project
 
-* {
-  font-family: 'Ubuntu', sans-serif;
+html,
+body {
+  height: 100%;
 }
 
-//@import "_bootstrap-variables";
-@import "_variables";
+.wrap {
+  min-height: 100%;
+  height: auto;
+  margin: 0 auto -60px;
+  padding: 0 0 60px;
+}
 
-@mixin btn-gradiant($color1, $color2, $hover: 0) {
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, $color1), color-stop(1, $color2));
-  background: -moz-linear-gradient(top, $color1 0%, $color2 100%);
-  background: -webkit-linear-gradient(top, $color1 0%, $color2 100%);
-  background: -o-linear-gradient(top, $color1 0%, $color2 100%);
-  background: -ms-linear-gradient(top, $color1 0%, $color2 100%);
-  background: linear-gradient(to bottom, $color1 0%, $color2 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$color1', endColorstr='$color2 ', GradientType=0);
+.wrap > .container {
+  padding: 70px 15px 20px;
+}
 
-  @if $hover != 0 {
-    &:hover {
-      @include btn-gradiant($color2, $color1);
-      border: solid 2px $white;
-      //box-shadow: 0 1px 3px $gray-500;
-    }
+.footer {
+  height: 60px;
+  background-color: #f5f5f5;
+  border-top: 1px solid #ddd;
+  padding-top: 20px;
+}
 
-    &:active {
-      border: solid 2px $white;
-    }
+.jumbotron {
+  text-align: center;
+  background-color: transparent;
+}
+
+.jumbotron .btn {
+  font-size: 21px;
+  padding: 14px 24px;
+}
+
+.not-set {
+  color: #c55;
+  font-style: italic;
+}
+
+/* add sorting icons to gridview sort links */
+a.asc:after, a.desc:after {
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  font-family: 'Glyphicons Halflings';
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  padding-left: 5px;
+}
+
+a.asc:after {
+  content: /*"\e113"*/ "\e151";
+}
+
+a.desc:after {
+  content: /*"\e114"*/ "\e152";
+}
+
+.sort-numerical a.asc:after {
+  content: "\e153";
+}
+
+.sort-numerical a.desc:after {
+  content: "\e154";
+}
+
+.sort-ordinal a.asc:after {
+  content: "\e155";
+}
+
+.sort-ordinal a.desc:after {
+  content: "\e156";
+}
+
+.grid-view th {
+  white-space: nowrap;
+}
+
+.hint-block {
+  display: block;
+  margin-top: 5px;
+  color: #999;
+}
+
+.error-summary {
+  color: #a94442;
+  background: #fdf7f7;
+  border-left: 3px solid #eed3d7;
+  padding: 10px 20px;
+  margin: 0 0 15px 0;
+}
+
+/* align the logout "link" (button in form) of the navbar */
+.nav li > form > button.logout {
+  padding: 15px;
+  border: none;
+}
+
+@media(max-width:767px) {
+  .nav li > form > button.logout {
+    display:block;
+    text-align: left;
+    width: 100%;
+    padding: 10px 15px;
   }
 }
 
-.btn {
-  -webkit-border-radius: $border-radius-lg;
-  -moz-border-radius: $border-radius-lg;
-  border-radius: $border-radius-lg;
-  border: solid $btn-border-width $border-color;
-  box-shadow: $btn-box-shadow !important;
-
-  &:hover {
-    text-decoration: underline;
-  }
-
-  &:active {
-    position: relative;
-    top: 1px;
-  }
+.nav > li > form > button.logout:focus,
+.nav > li > form > button.logout:hover {
+  text-decoration: none;
 }
 
-.btn-danger {
-  @include btn-gradiant($red, $crimson, 1);
-}
-
-.btn-danger {
-  @include btn-gradiant($red, $crimson, 1);
-}
-
-.btn-primary {
-  @include btn-gradiant($yellow, $orange, 1);
-}
-
-.btn-default {
-  color: $white;
-  @include btn-gradiant($gray-600, $gray-dark, 1);
-
-  &:hover {
-    color: $white;
-  }
-}
-
-.btn-success {
-  @include btn-gradiant($purple, $indigo, 1);
+.nav > li > form > button.logout:focus {
+  outline: none;
 }

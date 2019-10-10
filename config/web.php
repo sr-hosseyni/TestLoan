@@ -53,7 +53,8 @@ $config = [
         */
         'assetManager' => [
             'converter' => 'lucidtaz\yii2scssphp\ScssAssetConverter',
-        ]
+        ],
+        'personalCodeParser' => \app\services\PersonalCodeParser::class
     ],
     'params' => $params,
 ];

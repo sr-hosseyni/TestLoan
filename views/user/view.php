@@ -46,7 +46,7 @@ YiiAsset::register($this);
             [
                 'label' => 'Age',
                 'value' => function ($model) {
-                    return date_diff(PersonalCodeParser::parseAge($model->personal_code), new DateTime())->format('%y');
+                    return Yii::$app->personalCodeParser->parseAge($model->personal_code);
                 }
             ]
         ],
