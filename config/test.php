@@ -36,7 +36,8 @@ return [
                 'domain' => 'localhost',
             ],
             */
-        ],        
+        ],
+        'personalCodeParser' => \app\services\PersonalCodeParser::class
     ],
     'params' => $params,
 ];

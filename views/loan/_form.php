@@ -11,7 +11,7 @@ use yii\widgets\ActiveForm;
 
 <div class="loan-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['id' => 'loan-form']); ?>
 
     <?= $form->field($model, 'user_id')->hiddenInput(['value' => $user->id])->label(false); ?>
 

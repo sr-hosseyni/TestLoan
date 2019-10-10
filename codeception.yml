@@ -13,6 +13,15 @@ modules:
         Yii2:
             configFile: 'config/test.php'
 
+    enabled:
+        - Db:
+              dsn: 'pgsql:host=db_test;dbname=example'
+              user: 'example'
+              password: 'example'
+              dump: 'tests/_data/dump.sql'
+              populate: true
+#              cleanup: false
+
 # To enable code coverage:
 #coverage:
 #    #c3_url: http://localhost:8080/index-test.php/

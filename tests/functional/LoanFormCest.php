@@ -1,56 +1,45 @@
 <?php
-class ContactFormCest 
+
+use app\models\User;
+
+class LoanFormCest
 {
     public function _before(\FunctionalTester $I)
     {
-        $I->amOnPage(['site/contact']);
+        $I->amOnPage(['loan/create', 'user_id' => User::find()->limit(1)->one()->id]);
     }
 
-    public function openContactPage(\FunctionalTester $I)
+    public function openCreateLoanPage(\FunctionalTester $I)
     {
-        $I->see('Contact', 'h1');        
+        $I->wantTo('Check page is loading');
+        $I->canSee('Create Loan');
     }
 
     public function submitEmptyForm(\FunctionalTester $I)
     {
-        $I->submitForm('#contact-form', []);
+        $I->submitForm('#loan-form', []);
         $I->expectTo('see validations errors');
-        $I->see('Contact', 'h1');
-        $I->see('Name cannot be blank');
-        $I->see('Email cannot be blank');
-        $I->see('Subject cannot be blank');
-        $I->see('Body cannot be blank');
-        $I->see('The verification code is incorrect');
+        $I->see('Create Loan', 'h1');
+        $I->see('Amount cannot be blank.');
+        $I->see('Interest cannot be blank.');
+        $I->see('Duration cannot be blank.');
+        $I->see('Start Date cannot be blank.');
+        $I->see('End Date cannot be blank.');
     }
 
     public function submitFormWithIncorrectEmail(\FunctionalTester $I)
     {
-        $I->submitForm('#contact-form', [
-            'ContactForm[name]' => 'tester',
-            'ContactForm[email]' => 'tester.email',
-            'ContactForm[subject]' => 'test subject',
-            'ContactForm[body]' => 'test content',
-            'ContactForm[verifyCode]' => 'testme',
+        $I->submitForm('#loan-form', [
+            'Loan[amount]' => '1000.00',
+            'Loan[interest]' => '25.00',
+            'Loan[duration]' => '18',
+            'Loan[start_date]' => '2019-10-10',
+            'Loan[end_date]' => '2021-04-10',
+            'Loan[campaign]' => '2',
         ]);
-        $I->expectTo('see that email address is wrong');
-        $I->dontSee('Name cannot be blank', '.help-inline');
-        $I->see('Email is not a valid email address.');
-        $I->dontSee('Subject cannot be blank', '.help-inline');
-        $I->dontSee('Body cannot be blank', '.help-inline');
-        $I->dontSee('The verification code is incorrect', '.help-inline');        
-    }
 
-    public function submitFormSuccessfully(\FunctionalTester $I)
-    {
-        $I->submitForm('#contact-form', [
-            'ContactForm[name]' => 'tester',
-            'ContactForm[email]' => 'tester@example.com',
-            'ContactForm[subject]' => 'test subject',
-            'ContactForm[body]' => 'test content',
-            'ContactForm[verifyCode]' => 'testme',
-        ]);
-        $I->seeEmailIsSent();
-        $I->dontSeeElement('#contact-form');
-        $I->see('Thank you for contacting us. We will respond to you as soon as possible.');        
+        $I->expectTo('successfully create loan and redirect to loans list');
+        $I->dontSeeElement('#loan-form');
+        $I->see('', 'div.loan-view');
     }
 }
