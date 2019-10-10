@@ -72,10 +72,6 @@ class LoanController extends Controller
             throw new NotFoundHttpException('User not found');
         }
 
-        if (Yii::$app->personalCodeParser->parseAge($user->personal_code) < 18) {
-            throw new UnderAgeException();
-        }
-
         $model = new Loan();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);

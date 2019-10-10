@@ -87,9 +87,6 @@ class User extends ActiveRecord
         return parent::delete();
     }
 
-    /**
-     * @inheritdoc
-     */
     public function validatePersonalCode($attribute, $params)
     {
         try {

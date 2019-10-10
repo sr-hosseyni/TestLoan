@@ -42,6 +42,7 @@ class Loan extends ActiveRecord
             [['start_date', 'end_date'], 'safe'],
             [['status'], 'boolean'],
             [['user_id'], 'exist', 'targetClass' => User::class, 'targetAttribute' => 'id'],
+            [['user_id'], 'validateAge'],
             [['start_date', 'end_date'], 'match', 'pattern' => '#^\d{4}[-/ ]\d{2}[-/ ]\d{2}(\s+\d{2}:\d{2}:\d{2})?$#'],
         ];
     }
@@ -70,5 +71,12 @@ class Loan extends ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
+    }
+
+    public function validateAge($attribute, $params)
+    {
+        if (\Yii::$app->personalCodeParser->checkIsUnderage($this->user->personal_code)) {
+            $this->addError($attribute, 'Sorry, Loans are not available to underage users!');
+        }
     }
 }

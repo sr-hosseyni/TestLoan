@@ -11,6 +11,8 @@ use DateTime;
  */
 class PersonalCodeParser
 {
+    const UNDERAGE_MEASUREMENT = 18;
+
     /**
      * @param int $personalCode
      * @return DateTime
@@ -41,5 +43,16 @@ class PersonalCodeParser
     public function parseAge(int $personalCode): int
     {
         return date_diff($this->parseBirthDate($personalCode), new DateTime())->format('%y');
+    }
+
+    /**
+     * @param int $personalCode
+     * @param int $age
+     * @return bool
+     * @throws \Exception
+     */
+    public function checkIsUnderage(int $personalCode, $age = self::UNDERAGE_MEASUREMENT)
+    {
+        return $this->parseAge($personalCode) < $age;
     }
 }

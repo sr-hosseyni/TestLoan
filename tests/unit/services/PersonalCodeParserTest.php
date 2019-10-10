@@ -1,6 +1,6 @@
 <?php
 
-namespace tests\helpers;
+namespace tests\services;
 
 use app\exceptions\InvalidPersonalCodeException;
 use app\services\PersonalCodeParser;
