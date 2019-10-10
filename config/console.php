@@ -21,6 +21,7 @@ $config = [
             ],
         ],
         'db' => $db,
+        'personalCodeParser' => \app\services\PersonalCodeParser::class
     ],
     'params' => $params,
     /*
